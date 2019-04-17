@@ -1,0 +1,18 @@
+<html>
+<head>
+
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+</head>
+<body>
+<script>
+  var socket = io.connect('http://localhost');
+  socket.on('field', function (data) {
+    console.log(data);
+    $("#myfield").html(data);
+  });
+</script>
+  Data: <div id="myfield"></div>
+</body>
+</html>
