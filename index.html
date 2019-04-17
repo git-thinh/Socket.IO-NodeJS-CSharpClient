@@ -1,18 +1,60 @@
 <html>
 <head>
 
-<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
 
 </head>
 <body>
-<script>
-  var socket = io.connect('http://localhost');
-  socket.on('field', function (data) {
-    console.log(data);
-    $("#myfield").html(data);
-  });
-</script>
-  Data: <div id="myfield"></div>
+    <input type="text" id="textInput" />
+    <input type="button" value="Send" id="btnSend" /><br />
+    <input id="filename" type="file" />
+    <input type="button" value="Send Blob" onclick="sendBlob()" /><br />
+    <input type="button" value="Send File" onclick="sendFile()" /><br /> 
+    <hr />
+    Data: <div id="myfield"></div>
+    <script>
+        var socket = io.connect('http://localhost:8070/');
+        socket.on('field', function (data) {
+            console.log(data);
+            $("#myfield").html(data);
+        });
+
+
+        function sendBlob() {
+            var blob = new Blob([new Uint8Array([1, 2, 3, 4, 5])]);
+            var subBlob = blob.slice(2, 3);
+            var fr = new FileReader();
+            fr.onload = function (e) {
+                //console.log(new Uint8Array(e.target.result)[0]);
+                //console.log(new Uint8Array(e.target.result));
+                console.log(e.target.result);
+                //ws.send(e.target.result);
+                socket.emit('Upload', { 'Name': 'blob-data.txt', Data: e.target.result });
+            };
+            //fr.readAsArrayBuffer(subBlob);
+            fr.readAsArrayBuffer(blob);
+            socket.emit('Start', { 'Name': 'blob-data.txt', 'Size': 5 });
+        }
+
+        function sendFile() {
+            var file = document.getElementById('filename').files[0];
+
+            var reader = new FileReader();
+            reader.loadend = function () {
+            }
+
+            reader.onload = function (e) {
+                var rawData = new ArrayBuffer();
+                rawData = e.target.result;
+                console.log("the File has been transferred.", rawData)
+                //ws.send(rawData);
+                socket.emit('Upload', { 'Name': file.name, Data: rawData });
+            }
+            reader.readAsArrayBuffer(file);
+            socket.emit('Start', { 'Name': file.name, 'Size': file.size });
+        }
+    </script>
+
 </body>
 </html>

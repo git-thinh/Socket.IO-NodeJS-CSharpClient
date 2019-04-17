@@ -1,0 +1,5 @@
+E:\_cs\Socket.IO-NodeJS-CSharpClient\desktop\desktop\bin\Debug\desktop.exe
+E:\_cs\Socket.IO-NodeJS-CSharpClient\desktop\desktop\bin\Debug\desktop.pdb
+E:\_cs\Socket.IO-NodeJS-CSharpClient\desktop\desktop\obj\x86\Debug\desktop.csprojResolveAssemblyReference.cache
+E:\_cs\Socket.IO-NodeJS-CSharpClient\desktop\desktop\obj\x86\Debug\desktop.exe
+E:\_cs\Socket.IO-NodeJS-CSharpClient\desktop\desktop\obj\x86\Debug\desktop.pdb

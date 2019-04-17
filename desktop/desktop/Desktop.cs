@@ -28,7 +28,7 @@ namespace desktop
 
             IPAddress destination = Dns.GetHostAddresses(hostNameOrAddress)[0];
             IPEndPoint endPoint = new IPEndPoint(destination, destinationPort);
-            byte[] buffer = Encoding.ASCII.GetBytes(data);
+            byte[] buffer = Encoding.ASCII.GetBytes(Guid.NewGuid().ToString());
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             for (int i = 0; i < count; i++)
             {
